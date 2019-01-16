@@ -92,6 +92,54 @@ PRODUCT_API_CONFIG_MAP = {
         'port'    : 80,
         'protocol': 'http'
     },
+    'redis': {
+        'domain': 'r-kvstore.aliyuncs.com',
+        'version': '2015-01-01',
+        'port': 80,
+        'protocol': 'http'
+    },
+    'mongodb': {
+        'domain': 'mongodb.aliyuncs.com',
+        'version': '2015-12-01',
+        'port': 80,
+        'protocol': 'http'
+    },
+    'dts': {
+        'domain': 'dts.aliyuncs.com',
+        'version': '2016-08-01',
+        'port': 80,
+        'protocol': 'http'
+    },
+    'vpc': {
+        'domain': 'vpc.aliyuncs.com',
+        'version': '2016-04-28',
+        'port': 80,
+        'protocol': 'http'
+    },
+    'cms': {
+        'domain': 'metrics.aliyuncs.com',
+        'version': '2018-03-08',
+        'port': 80,
+        'protocol': 'http',
+    },
+    'waf': {
+        'domain': 'wafopenapi.cn-hangzhou.aliyuncs.com',
+        'version': '2018-01-17',
+        'port': 443,
+        'protocol': 'https',
+    },
+    'domain': {
+        'domain': 'domain.aliyuncs.com',
+        'version': '2018-01-29',
+        'port': 443,
+        'protocol': 'https',
+    },
+    'business': {
+        'domain': 'business.aliyuncs.com',
+        'version': '2017-12-14',
+        'port': 443,
+        'protocol': 'https',
+    },
 }
 
 class AliyunCommon(object):
