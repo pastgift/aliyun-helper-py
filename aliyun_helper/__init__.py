@@ -8,7 +8,13 @@ import json
 import xmltodict
 
 def percent_encode(s):
-    encoded = urllib.quote(str(s).encode('utf8'), '')
+    # I fell sick...
+    if isinstance(s, unicode):
+        s = s.encode('utf8')
+    else:
+        s = str(s).decode('utf8').encode('utf8')
+
+    encoded = urllib.quote(s, '')
     encoded = encoded.replace('+', '%20')
     encoded = encoded.replace('*', '%2A')
     encoded = encoded.replace('%7E', '~')
