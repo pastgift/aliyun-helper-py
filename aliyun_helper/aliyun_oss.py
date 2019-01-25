@@ -45,9 +45,6 @@ class AliyunOSS(object):
     def get_canonicalized_resource_string(self, bucket_name=None, object_name=None, sub_resource=None, query=None):
         canonicalized_resource_string = '/'
 
-        # if bucket_name and object_name:
-        #     canonicalized_resource_string += bucket_name + '/' + object_name
-
         if bucket_name:
             canonicalized_resource_string += bucket_name + '/'
 
@@ -81,8 +78,19 @@ class AliyunOSS(object):
 
         region_id = region_id or 'oss-cn-hangzhou'
 
+        if object_name and object_name.startswith('/'):
+            object_name = object_name[1:]
+
         headers = headers or {}
         headers['date'] = datetime.datetime.utcnow().strftime(GMT_FORMAT)
+
+        if body:
+            if isinstance(body, unicode):
+                body = body.encode('utf8')
+
+            h = hashlib.md5()
+            h.update(body)
+            headers['content-md5'] = base64.encodestring(h.digest()).strip()
 
         canonicalized_header_string   = self.get_canonicalized_header_string(headers)
         canonicalized_resource_string = self.get_canonicalized_resource_string(bucket_name, object_name, sub_resource, query)

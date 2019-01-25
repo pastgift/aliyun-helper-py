@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
 # Build-in Modules
-import time
-import uuid
 import base64
-import hmac
 import hashlib
+import hmac
+import time
+import urllib
+import uuid
 
 # 3rd-part Modules
 import requests
 
 # Project Modules
-from . import percent_encode, parse_response
+from . import parse_response
 
 PRODUCT_API_CONFIG_MAP = {
     'ecs': {
@@ -142,6 +143,20 @@ PRODUCT_API_CONFIG_MAP = {
     },
 }
 
+def percent_encode(s):
+    # I fell sick...
+    if isinstance(s, unicode):
+        s = s.encode('utf8')
+    else:
+        s = str(s).decode('utf8').encode('utf8')
+
+    encoded = urllib.quote(s, '')
+    encoded = encoded.replace('+', '%20')
+    encoded = encoded.replace('*', '%2A')
+    encoded = encoded.replace('%7E', '~')
+
+    return encoded
+
 class AliyunCommon(object):
     '''
     Aliyun common HTTP API
@@ -167,7 +182,7 @@ class AliyunCommon(object):
         return signature
 
     def verify(self):
-        status_code, _ = self.call_ecs(Action='DescribeRegions')
+        status_code, _ = self.ecs(Action='DescribeRegions')
         return (status_code == 200)
 
     def call(self, domain, version, port=80, protocol='http', timeout=3, **biz_params):

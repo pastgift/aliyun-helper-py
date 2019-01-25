@@ -1,28 +1,15 @@
 # -*- coding: utf-8 -*-
 
 # Build-in Modules
-import urllib
 import json
 
 # 3rd-part Modules
 import xmltodict
 
-def percent_encode(s):
-    # I fell sick...
-    if isinstance(s, unicode):
-        s = s.encode('utf8')
-    else:
-        s = str(s).decode('utf8').encode('utf8')
-
-    encoded = urllib.quote(s, '')
-    encoded = encoded.replace('+', '%20')
-    encoded = encoded.replace('*', '%2A')
-    encoded = encoded.replace('%7E', '~')
-
-    return encoded
-
 def parse_response(response):
-    resp_content_type = response.headers.get('content-type').lower().split(';')[0].strip()
+    resp_content_type = response.headers.get('content-type') or ''
+    resp_content_type = resp_content_type.lower().split(';')[0].strip()
+
     if resp_content_type == 'application/json':
         return response.json()
 
