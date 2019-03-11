@@ -12,7 +12,7 @@ import uuid
 import requests
 
 # Project Modules
-from . import parse_response
+from . import parse_response, ensure_str
 
 PRODUCT_API_CONFIG_MAP = {
     'ecs': {
@@ -65,7 +65,7 @@ PRODUCT_API_CONFIG_MAP = {
     },
     'cdn': {
         'domain'  : 'cdn.aliyuncs.com',
-        'version' : '2014-11-11',
+        'version' : '2018-05-10',
         'port'    : 80,
         'protocol': 'http'
     },
@@ -89,6 +89,12 @@ PRODUCT_API_CONFIG_MAP = {
     },
     'dyvms': {
         'domain'  : 'dyvmsapi.aliyuncs.com',
+        'version' : '2017-05-25',
+        'port'    : 80,
+        'protocol': 'http'
+    },
+    'dybase': {
+        'domain'  : 'dybaseapi.aliyuncs.com',
         'version' : '2017-05-25',
         'port'    : 80,
         'protocol': 'http'
@@ -141,6 +147,18 @@ PRODUCT_API_CONFIG_MAP = {
         'port': 443,
         'protocol': 'https',
     },
+    'antiddos': {
+        'domain': 'antiddos.aliyuncs.com',
+        'version': '2017-05-18',
+        'port': 443,
+        'protocol': 'https',
+    },
+    'ddospro': {
+        'domain': 'ddospro.cn-hangzhou.aliyuncs.com',
+        'version': '2017-07-25',
+        'port': 443,
+        'protocol': 'https',
+    },
 }
 
 def percent_encode(s):
@@ -162,8 +180,8 @@ class AliyunCommon(object):
     Aliyun common HTTP API
     '''
     def __init__(self, access_key_id=None, access_key_secret=None, *args, **kwargs):
-        self.access_key_id     = str(access_key_id)
-        self.access_key_secret = str(access_key_secret)
+        self.access_key_id     = ensure_str(access_key_id)
+        self.access_key_secret = ensure_str(access_key_secret)
 
     def sign(self, params_to_sign):
         canonicalized_query_string = ''

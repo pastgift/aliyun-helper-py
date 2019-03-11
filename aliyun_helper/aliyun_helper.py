@@ -6,6 +6,7 @@ import json
 import uuid
 
 # Project Modules
+from . import retry_for_requests
 from aliyun_common import AliyunCommon
 from aliyun_oss import AliyunOSS
 
@@ -24,8 +25,10 @@ class AliyunHelper(object):
     def verify(self):
         return self.common_client.verify()
 
-    def common(self, product, timeout=3, **biz_params):
+    @retry_for_requests
+    def common(self, product, timeout=10, **biz_params):
         return self.common_client.__getattr__(product)(timeout=timeout, **biz_params)
 
-    def oss(self, method, timeout=3, **biz_params):
+    @retry_for_requests
+    def oss(self, method, timeout=10, **biz_params):
         return self.oss_client.__getattr__(method)(timeout=timeout, **biz_params)
