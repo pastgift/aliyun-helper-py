@@ -6,7 +6,7 @@ import base64
 import hmac
 import hashlib
 
-# 3rd-part Modules
+# 3rd-party Modules
 import requests
 
 # Project Modules
